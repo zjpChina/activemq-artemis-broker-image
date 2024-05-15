@@ -72,15 +72,15 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         run: |
           COMMIT_TAG=dev.$(date +%Y%m%d).$(git rev-parse --short "$GITHUB_SHA")
-          podman login --username=${{ secrets.QUAY_USERNAME }} --password=${{ secrets.QUAY_PASSWORD }} quay.io
-          podman manifest push $IMAGE_NAME:dev.latest docker://quay.io/${{ secrets.QUAY_NAMESPACE }}/$IMAGE_NAME:$COMMIT_TAG
-          podman manifest push $IMAGE_NAME:dev.latest docker://quay.io/${{ secrets.QUAY_NAMESPACE }}/$IMAGE_NAME:dev.latest
+          podman login --username=${{ secrets.QUAY_USERNAME }} --password=${{ secrets.QUAY_PASSWORD }} xc-harbor.mrnuanshu.com
+          podman manifest push $IMAGE_NAME:dev.latest docker://xc-harbor.mrnuanshu.com/${{ secrets.QUAY_NAMESPACE }}/$IMAGE_NAME:$COMMIT_TAG
+          podman manifest push $IMAGE_NAME:dev.latest docker://xc-harbor.mrnuanshu.com/${{ secrets.QUAY_NAMESPACE }}/$IMAGE_NAME:dev.latest
 
       - name: Push the snapshot image
         if: ${{ github.event_name == 'schedule' || inputs.snapshot }}
         run: |
-          podman login --username=${{ secrets.QUAY_USERNAME }} --password=${{ secrets.QUAY_PASSWORD }} quay.io
-          podman manifest push $IMAGE_NAME:dev.latest docker://quay.io/${{ secrets.QUAY_NAMESPACE }}/$IMAGE_NAME:snapshot
+          podman login --username=${{ secrets.QUAY_USERNAME }} --password=${{ secrets.QUAY_PASSWORD }} xc-harbor.mrnuanshu.com
+          podman manifest push $IMAGE_NAME:dev.latest docker://xc-harbor.mrnuanshu.com/${{ secrets.QUAY_NAMESPACE }}/$IMAGE_NAME:snapshot
 
       - name: Trigger children
         if: ${{ github.event_name == 'schedule' || inputs.trigger_children }}
