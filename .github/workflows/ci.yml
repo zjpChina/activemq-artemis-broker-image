@@ -56,7 +56,7 @@ jobs:
       - name: Build the image
         run: |
           cekit --verbose build --dry-run --overrides "{'labels': [{'name': 'quay.expires-after', 'value': '90d'}, {'name': 'git-sha', 'value': '$GITHUB_SHA'}]}" podman
-          podman build --platform linux/amd64 --platform linux/arm64 --manifest $IMAGE_NAME:dev.latest ./target/image
+          podman build  --platform linux/arm64 --manifest $IMAGE_NAME:dev.latest ./target/image
 
       - name: Check the image
         run: |
@@ -72,7 +72,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         run: |
           COMMIT_TAG=dev.$(date +%Y%m%d).$(git rev-parse --short "$GITHUB_SHA")
-          podman login --username=${{ secrets.QUAY_USERNAME }} --password=${{ secrets.QUAY_PASSWORD }} docker.io:443
+          podman login --username=${{ secrets.QUAY_USERNAME }} --password=${{ secrets.QUAY_PASSWORD }} docker.io
           podman manifest push $IMAGE_NAME:dev.latest docker://docker.io/${{ secrets.QUAY_NAMESPACE }}/$IMAGE_NAME:$COMMIT_TAG
           podman manifest push $IMAGE_NAME:dev.latest docker://docker.io/${{ secrets.QUAY_NAMESPACE }}/$IMAGE_NAME:dev.latest
 

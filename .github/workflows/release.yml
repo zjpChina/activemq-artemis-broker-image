@@ -46,7 +46,7 @@ jobs:
       - name: Build the image
         run: |
           cekit --verbose build --dry-run podman
-          podman build --platform linux/amd64 --platform linux/arm64 --manifest $IMAGE_NAME:latest ./target/image
+          podman build  --platform linux/arm64 --manifest $IMAGE_NAME:latest ./target/image
 
       - name: Push the image
         run: |
