@@ -2,8 +2,8 @@ schema_version: 1
 
 name: "artemiscloud/activemq-artemis-broker"
 description: "ActiveMQ Artemis broker container image"
-version: "1.0.26"
-from: "registry.access.redhat.com/ubi8/openjdk-17@sha256:7016a0c5ce878211a8b82fbeb6619f82a97a35acdba6773be1c5f92f4e85aec8"
+version: "1.0.6"
+from: "registry.access.redhat.com/ubi8/openjdk-17@sha256:774fc45231657c73ada4d22d1f12bbf88206da2d49d982404bd8fd95db8482b7"
 
 labels:
   - name: "io.k8s.display-name"
@@ -31,20 +31,12 @@ envs:
   - name: "AMQ_RESET_CONFIG"
     value: "false"
 
-ports:
-  - value: 1883
-  - value: 5445
-  - value: 5672
-  - value: 8161
-  - value: 61613
-  - value: 61616
-
 packages:
   manager: microdnf
   install:
     - hostname
     - libaio
-    - python38
+    - python2
 
 modules:
   repositories:
